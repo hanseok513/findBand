@@ -3,7 +3,6 @@ import thunk from "redux-thunk";
 import combinedReducer from "./reducers";
 
 export function configureStore() {
-  console.log("reducers: " + combinedReducer);
   return createStore(
     combinedReducer,
     compose(

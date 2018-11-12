@@ -1,6 +1,8 @@
-import React, {Component} from 'react';
-import Filter from './Filter';
-import Main from './Main';
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import SideContainer from "./SideContainer";
+import Main from "./Main";
+import "../styles/body.css";
 
 class Body extends Component {
   constructor(props) {
@@ -8,9 +10,9 @@ class Body extends Component {
   }
   render() {
     return (
-      <div>
-        <Filter/>
-        <Main/>
+      <div id="body-container">
+        <Route path={["/user-list/", "/group-list/"]} component={SideContainer}/>
+        <Main />
       </div>
     );
   }

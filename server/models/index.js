@@ -12,4 +12,5 @@ mongoose
   
 mongoose.Promise = Promise;
 
-module.exports.Musician = require("./musicianModel");
+module.exports.User = require("./userModel");
+module.exports.Group = require("./groupModel");
