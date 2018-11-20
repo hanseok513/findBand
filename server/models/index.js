@@ -12,5 +12,5 @@ mongoose
   
 mongoose.Promise = Promise;
 
-module.exports.User = require("./userModel");
-module.exports.Group = require("./groupModel");
+module.exports.User = require("./User");
+module.exports.Group = require("./Group");

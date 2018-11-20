@@ -5,9 +5,6 @@ import Main from "./Main";
 import "../styles/body.css";
 
 class Body extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div id="body-container">

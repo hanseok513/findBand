@@ -1,23 +1,23 @@
 import React, { Component } from "react";
-import {requestSignup, requestLogin} from '../services/api'
 
 const DEFAULT_STATE = {
   email: "",
   username: "",
+  age: 20,
+  gender: "N/A",
   password: ""
 };
 
 class AuthForm extends Component {
   state = DEFAULT_STATE;
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
+    const { onAuth, history } = this.props;
     e.preventDefault();
     this.setState(DEFAULT_STATE);
-    if (this.props.isSignup) {
-      requestSignup(this.state);
-    } else {
-      requestLogin(this.state);
-    }
+    onAuth(this.state, this.props.isSignup ? "signup" : "login").then(res => {
+      history.goBack();
+    });
   };
 
   handleChange = e => {
@@ -27,8 +27,8 @@ class AuthForm extends Component {
   };
 
   render() {
-    const isSignup = this.props.isSignup;
-    console.log(this.props);
+    const { isSignup } = this.props;
+
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>
@@ -47,20 +47,6 @@ class AuthForm extends Component {
               We'll never share your email with anyone else.
             </small>
           </div>
-          {this.props.isSignup && (
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="username"
-                className="form-control"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleChange}
-                id="username"
-                placeholder="Username"
-              />
-            </div>
-          )}
           <div className="form-group">
             <label htmlFor="exampleInputPassword1">Password</label>
             <input
@@ -73,7 +59,51 @@ class AuthForm extends Component {
               placeholder="Password"
             />
           </div>
-          
+          {isSignup && (
+            <div>
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="username"
+                  className="form-control"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                  id="username"
+                  placeholder="Username"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="gender">Gender</label>
+                <select
+                  type="gender"
+                  className="form-control"
+                  name="gender"
+                  value={this.state.gender}
+                  onChange={this.handleChange}
+                  id="gender"
+                  placeholder="Gender"
+                >
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>N/A</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="age">Age</label>
+                <input
+                  className="form-control"
+                  type="number"
+                  name="age"
+                  value={this.state.age}
+                  onChange={this.handleChange}
+                  id="age"
+                  min="20"
+                  placeholder="20"
+                />
+              </div>
+            </div>
+          )}
 
           <button type="submit" className="btn btn-primary">
             Submit

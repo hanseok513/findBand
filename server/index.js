@@ -6,23 +6,24 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+const db = require("./models");
+
 const errorHandler = require("./handlers/errorHandler");
 
 const groupRouter = require("./routers/groupRouter");
 const userRouter = require("./routers/userRouter");
 const authRouter = require("./routers/authRouter");
 
-const {isAuthenticated} = require("./middlewares/auth");
+const { isLoginRequired, isCorrectUser } = require("./middlewares/auth");
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger("combined"));
 
 app.use("/api/groups", groupRouter);
-app.use("/api/users", isAuthenticated, userRouter);
+app.use("/api/users", isLoginRequired, userRouter);
 app.use("/api/auth", authRouter);
 app.get("/", (req, res) => {
   res.send("HELLO");

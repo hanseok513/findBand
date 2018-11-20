@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
-import testReducer from './testReducer';
-import testReducer2 from './testReducer2';
+import currentUser from './currentUser';
+import users from './users';
+import errors from './errors';
 
-const combinedReducer = combineReducers({firstAction:testReducer, secondAction:testReducer2});
+const combinedReducer = combineReducers({users, currentUser, errors});
 
 export default combinedReducer;

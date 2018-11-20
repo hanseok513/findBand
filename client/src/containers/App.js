@@ -3,7 +3,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import { configureStore } from "../store";
-import Tester from "./Tester";
 import NavBar from "./NavBar";
 import Body from "./Body";
 
@@ -18,7 +17,6 @@ class App extends Component {
             <NavBar />
             <Body />
             HI
-            <Tester />
           </div>
         </Router>
       </Provider>

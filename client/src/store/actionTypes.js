@@ -1,2 +1,4 @@
-export const TEST_ACTION = "TEST_ACTION";
-export const TEST_ACTION2 = "TEST_ACTION2";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const LOAD_USERS = "LOAD_USERS";
+export const ADD_ERROR = "ADD_ERROR";
+export const REMOVE_ERROR = "REMOVE_ERROR";

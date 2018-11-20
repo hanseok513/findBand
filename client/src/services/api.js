@@ -1,19 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
 
-export async function requestSignup(userData) {
-  try {
-    const res = await axios.post("/api/auth/signup", userData);
-    console.log(res);
-  } catch (err) {
-    console.log(err);
+export function setTokenHeader(token) {
+  if (token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common["Authorization"];
   }
 }
 
-export async function requestLogin(userData) {
-  try {
-    const res = await axios.post("/api/auth/login", userData);
-    console.log(res);
-  } catch (err) {
-    console.log(err);
-  }
+export function removeTokenHeader() {
+  setTokenHeader(false);
+}
+
+export async function axiosCall(method, path, data) {
+  return new Promise((resolve, reject) => {
+    return axios[method](path, data)
+      .then(res => resolve(res.data))
+      .catch(err => {
+        return reject(err.response.data);
+      });
+  });
 }

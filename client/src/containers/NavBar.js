@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
+import { logout } from "../store/actions/authActions";
+
 import "../styles/navbar.css";
 
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
+    const { isUserLoggedIn, logout, history } = this.props;
     return (
       <nav className="navbar navbar-dark bg-dark">
         <Link className="navbar-brand" to="/">
@@ -22,16 +23,34 @@ class NavBar extends Component {
           <Link className="nav-item" to="/user-info">
             UserInfo
           </Link>
-          <Link className="nav-item" to="/login">
-            Login
-          </Link>
-          <Link className="nav-item" to="/signup">
-            Signup
-          </Link>
+          {!isUserLoggedIn && (
+            <Link className="nav-item" to="/login">
+              Login
+            </Link>
+          )}
+          {!isUserLoggedIn && (
+            <Link className="nav-item" to="/signup">
+              Signup
+            </Link>
+          )}
+          {isUserLoggedIn && (
+            <Link className="nav-item" to="/" onClick={logout}>
+              Logout
+            </Link>
+          )}
         </ul>
       </nav>
     );
   }
 }
 
-export default NavBar;
+const mapStateToProps = state => {
+  return {
+    isUserLoggedIn: !!state.currentUser
+  };
+};
+
+export default withRouter(connect(
+  mapStateToProps,
+  { logout }
+)(NavBar));

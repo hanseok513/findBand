@@ -1,27 +1,71 @@
-import React, {Component} from 'react';
-import {Switch, Route} from 'react-router-dom';
-import AuthForm from '../components/AuthForm';
-import GroupList from '../components/GroupList';
-import UserList from '../components/UserList';
-import UserInfo from '../components/UserInfo';
+import React, { Component } from "react";
+import { Switch, Route, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import AuthForm from "../components/AuthForm";
+import GroupList from "../components/GroupList";
+import withAuth from "../hocs/withAuth";
+import UserList from "./UserList";
+import UserInfo from "../components/UserInfo";
+import { handleAuth } from "../store/actions/authActions";
+import { addError, removeError } from "../store/actions/errorActions";
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location && this.props.error) {
+      this.props.removeError();
+      console.log("location has changed");
+    }
   }
+
   render() {
+    const { handleAuth, history, addError, removeError, error } = this.props;
     return (
       <div className="container-fluid main">
-        <Switch> 
-          <Route exact path="/login" component={AuthForm}></Route>
-          <Route exact path="/signup" render={()=>(<AuthForm isSignup/>)}></Route>
-          <Route exact path="/user-info" component={UserInfo}></Route>
-          <Route exact path="/user-list" component={UserList}></Route>
-          <Route exact path="/group-list" component={GroupList}></Route>
+        {error && <h1>{error}</h1>}
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={() => (
+              <AuthForm
+                onAuth={handleAuth}
+                history={history}
+                onError={addError}
+                removeError={removeError}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={() => (
+              <AuthForm
+                isSignup
+                onAuth={handleAuth}
+                history={history}
+                onError={addError}
+                removeError={removeError}
+              />
+            )}
+          />
+          <Route exact path="/user-info" component={UserInfo} />
+          <Route exact path="/user-list" component={withAuth(UserList)} />
+          <Route exact path="/group-list" component={GroupList} /> />
         </Switch>
       </div>
     );
   }
 }
 
-export default Main;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser,
+    error: state.errors
+  };
+};
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { handleAuth, addError, removeError }
+  )(Main)
+);
