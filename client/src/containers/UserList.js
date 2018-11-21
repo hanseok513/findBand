@@ -12,11 +12,11 @@ class UserList extends Component {
 
   render() {
     const users = this.props.users.map(user => (
-      <UserItem className="list-group-item" user={user} key={user._id} />
+      <UserItem user={user} key={user._id} />
     ));
     return (
       <div className="container">
-        <ul className="list-group">{users}</ul>
+        <ul className="card-column">{users}</ul>
       </div>
     );
   }

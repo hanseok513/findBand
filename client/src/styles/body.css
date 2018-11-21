@@ -1,13 +1,6 @@
 #body-container {
   display: flex;
-  flex-direction: flex-column;
+  flex-direction: column;
 }
 
-.filter {
-  flex: 1 1 300px;
-}
-
-.main {
-  flex: 2 2 500px;
-}
 

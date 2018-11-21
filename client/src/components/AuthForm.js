@@ -16,7 +16,7 @@ class AuthForm extends Component {
     e.preventDefault();
     this.setState(DEFAULT_STATE);
     onAuth(this.state, this.props.isSignup ? "signup" : "login").then(res => {
-      history.goBack();
+      history.push("/user-list");
     });
   };
 

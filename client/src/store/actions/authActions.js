@@ -26,9 +26,8 @@ export function handleAuth(userData, type) {
     return new Promise((resolve, reject) => {
       return axiosCall("post", `/api/auth/${type}`, userData)
         .then(({ token, user }) => {
-          console.log("token", token);
-          console.log("user", user);
           localStorage.setItem("jwtToken", token);
+          localStorage.setItem("authorizedUser", user);
           setTokenHeader(token);
           dispatch(setCurrentUser(user));
           dispatch(removeError());

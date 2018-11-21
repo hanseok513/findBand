@@ -7,36 +7,33 @@ import "../styles/navbar.css";
 
 class NavBar extends Component {
   render() {
-    const { isUserLoggedIn, logout, history } = this.props;
+    const { isUserLoggedIn, logout } = this.props;
     return (
       <nav className="navbar navbar-dark bg-dark">
         <Link className="navbar-brand" to="/">
-          MEET
+          FindBand
         </Link>
         <ul className="nav nav-pills">
-          <Link className="nav-item" to="/user-list">
-            Users
-          </Link>
-          <Link className="nav-item" to="/group-list">
-            Groups
-          </Link>
-          <Link className="nav-item" to="/user-info">
-            UserInfo
-          </Link>
           {!isUserLoggedIn && (
-            <Link className="nav-item" to="/login">
-              Login
-            </Link>
-          )}
-          {!isUserLoggedIn && (
-            <Link className="nav-item" to="/signup">
-              Signup
-            </Link>
+            <div>
+              <Link className="nav-item" to="/login">
+                Login
+              </Link>
+              <Link className="nav-item" to="/signup">
+                Signup
+              </Link>
+            </div>
           )}
           {isUserLoggedIn && (
-            <Link className="nav-item" to="/" onClick={logout}>
-              Logout
-            </Link>
+            <div>
+              <Link className="nav-item" to="/user-info">
+                MyInfo
+              </Link>
+
+              <Link className="nav-item" to="/" onClick={logout}>
+                Logout
+              </Link>
+            </div>
           )}
         </ul>
       </nav>
@@ -50,7 +47,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(
-  mapStateToProps,
-  { logout }
-)(NavBar));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logout }
+  )(NavBar)
+);
